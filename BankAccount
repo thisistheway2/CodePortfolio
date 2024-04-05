@@ -1,0 +1,27 @@
+// This BankAccount class includes methods for deposits, withdrawls, and getting total balances.
+
+public class BankAccount {
+
+    private Decimal accountBalance = 0;
+    private static Decimal totalAccountBalance = 0;
+    
+    public void makeDeposit (Decimal deposit){
+        
+        accountBalance += deposit;
+        totalAccountBalance += deposit;
+    }
+    
+    public void makeWithdrawl (Decimal withdrawl) {
+      accountbalance -= withdrawl;
+      totalAccountBalance -= withdrawl;
+    }
+    
+    public Decimal getAccountBalance(){
+      return accountBalance;
+    }
+    
+    public static Decimal getTotalAccountBalance (){
+      return totalAccountBalance;
+       
+    }
+}
