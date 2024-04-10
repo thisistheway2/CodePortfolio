@@ -1,1 +1,14 @@
 // This is DML and SOQL practice
+
+
+// Create 10 new Accounts
+
+
+
+//Modify the 10 new accounts and set values for NumberofEmployees field, save changes to database
+
+
+//SOQL query that retrieves the data I just created 
+
+
+// SOQL query that retrieves 5 accounts with the fewwest number of employees and display in ASC (low to high) order by num of employees.
