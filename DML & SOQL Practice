@@ -2,10 +2,29 @@
 
 
 // Create 10 new Accounts
-
-
-
 //Modify the 10 new accounts and set values for NumberofEmployees field, save changes to database
+
+
+List <Account> accounts = new List <Account>();
+
+for(Integer i=1; i<11; i++){
+    Account acct = new Account();
+    
+    acct.name= 'Assignment Accountz ' +i;
+    accounts.add(acct);
+}
+insert accounts;
+
+Integer numofEmp= 100;
+    
+For(Account act: accounts){
+   act.NumberofEmployees= numofEmp;
+    numofEmp += 100;
+}
+
+update accounts;
+
+
 
 
 //SOQL query that retrieves the data I just created 
