@@ -31,3 +31,8 @@ SELECT Id,Name, NumberofEmployees FROM Account WHERE name LIKE 'Assignment Accou
 // SOQL query that retrieves 5 accounts with the fewwest number of employees and display in ASC (low to high) order by num of employees.
 
 SELECT Id,Name,NumberOfEmployees FROM Account ORDER BY NumberOfEmployees ASC NULLS LAST LIMIT 5
+
+
+//because I inserted 50 accounts (mostly on accident) I created this query and deleted in annon apex:
+
+SELECT Id,Name, NumberofEmployees FROM Account WHERE name LIKE 'Assignment Accountz%'
