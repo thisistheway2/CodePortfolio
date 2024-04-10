@@ -1,0 +1,43 @@
+public with sharing class StockItemHandler {
+    
+    public static void handleBeforeInsert(List<Stock_Item__c> newStockItems){
+  
+        List<String> existingNames = new List<String>();
+        //get all the existing names of Stock Items
+        for(Stock_Item__c item : [SELECT Id, Item_Name__c from Stock_Item__c]){
+            existingNames.add(item.Item_Name__c);
+        	}
+        
+        //if a Stock Item with that name already exists, either prevent it from being created or append Duplicate Item to the name
+        for (Stock_Item__c s : newStockItems){
+            if (existingNames.contains(s.Item_Name__c)) {
+                s.addError('This is a duplicate and cannot be created.');
+                //s.Item_Name__c = s.Item_Name__c + ' - Duplicate Item';
+       		}	
+    	}
+ 
+	}
+}
+    
+    public static void handleBeforeDelete(List<Stock_Item__c> stockItems) {
+        
+	  //Before a Stock Item is deleted, make sure that the stock on hand is at 0.  If it is not, Create a case so that someone is alerted.
+        List<Case> caseList = new List<Case>();
+        // created a list to hold potential new case to be created
+	for(Stock_Item__c sItem : stockItems) {
+        //If stock on hand is not equal to 0, create a case.
+         if (sItem.stock_on_hand__c != 0 ) {
+             Case cse = new Case();
+             cse.Description= 'Stock Item ' + sItem.Item_Name__c + '(' + sItem.Id + ')' + 'was deleted and had '+ sItem.stock_on_hand__c + 'on hand';
+             cse.Subject = 'Stock Item Deletion Information';
+             cse.Status= 'New';
+             cse.Priority= 'Medium';
+	     
+	     caseList.add(cse);             
+                 }
+         }
+         if (caseList.size() > 0) {
+         insert caseList;
+         }
+    }
+}
