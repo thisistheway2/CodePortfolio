@@ -1,0 +1,14 @@
+public class LowStockItem {
+    
+public static list<Stock_Item__c> getLowStockItems() {
+
+//Returns a list where "item stock is low" = true
+
+List<Stock_Item__C> listofLowStockItems= [SELECT Id, Item_Name__c, Item_Stock_is_Low__c, Minimum_Stock_Level__c, Stock_on_Hand__c
+FROM Stock_Item__C WHERE Item_Stock_Is_Low__c = TRUE];
+
+system.debug ('Items that are low: ' +listofLowStockItems);
+
+return listofLowStockItems;
+
+}
