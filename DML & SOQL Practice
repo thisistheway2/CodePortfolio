@@ -35,4 +35,11 @@ SELECT Id,Name,NumberOfEmployees FROM Account ORDER BY NumberOfEmployees ASC NUL
 
 //because I inserted 50 accounts (mostly on accident) I created this query and deleted in annon apex:
 
-SELECT Id,Name, NumberofEmployees FROM Account WHERE name LIKE 'Assignment Accountz%'
+List <Account> accounts = 
+    [SELECT Id 
+    FROM Account
+    WHERE name Like 'Assign%'];
+
+delete accounts;
+
+
