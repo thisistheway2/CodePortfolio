@@ -1,1 +1,16 @@
 //Trigger Practice
+
+
+//After Trigger Practice. Creat an account and an associated contact record. This code is also bulkified to prevent hitting governor limits.
+
+trigger AccountTrigger on Account (after insert) {
+List <Contact> acctCont = new List <Contact>();
+    For (Account acct : Trigger.new){
+        Contact c = new Contact ();
+        c.FirstName = 'Hello you';
+        c.LastName = 'silly person';
+        c.accountId = acct.Id;
+        acctCont.add (c);
+    }    
+    Insert acctCont;
+}
