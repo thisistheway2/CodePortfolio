@@ -14,3 +14,10 @@ List <Contact> acctCont = new List <Contact>();
     }    
     Insert acctCont;
 }
+
+
+
+
+//Prevent Deletion of Account Records with associated Contacts and throw error
+
+trigger
