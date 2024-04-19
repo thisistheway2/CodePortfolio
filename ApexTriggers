@@ -1,23 +1,45 @@
-//Trigger Practice
+//Trigger Practice (It is best practice to NOT put logic in tigger. I would usually use a handler or helper class and call those methods in the trigger. See RAD women trigger examples.
+//This was done soley based on a course I am working on.
 
 
-//After Trigger Practice. Creat an account and an associated contact record. This code is also bulkified to prevent hitting governor limits.
+//Create an account and an associated contact record. This code is also bulkified to prevent hitting governor limits.
 
-trigger AccountTrigger on Account (after insert) {
-List <Contact> acctCont = new List <Contact>();
+trigger AccountTrigger on Account (after insert, before delete) {
+   
+    if(Trigger.isAfter && Trigger.isInsert)     
+   
+    {
+    List <Contact> acctCont = new List <Contact>();
     For (Account acct : Trigger.new){
         Contact c = new Contact ();
-        c.FirstName = 'Hello you';
-        c.LastName = 'silly person';
+        c.LastName = 'Dummy '+ acct.Name;
         c.accountId = acct.Id;
         acctCont.add (c);
     }    
+   
     Insert acctCont;
+
+
+
+
+//Prevents deletion of Account when there are associated Contacts and throws error.
+
+    else if (Trigger.isbefore) {
+
+    	if(trigger.isdelete) {
+            
+        Set <id> acctIdSet = new Set <id> ();
+        
+        For (Account a : Trigger.old){
+            acctIdSet.add(a.Id);
+        }
+        Map <Id, Account> recColl = new Map <Id, Account>([SELECT Id,Name, (SELECT Id from Contacts) From Account WHERE Id IN :acctIdSet]);
+            For(Account acct: Trigger.old){
+              If(recColl.get(acct.Id).contacts.size() >0)
+                {
+                    acct.addError('Account has contacts and cannot be deleted!');
+                }
+            }
+    }
 }
-
-
-
-
-//Prevent Deletion of Account Records with associated Contacts and throw error
-
-trigger
+}
